@@ -1,13 +1,11 @@
 from PyQt5.QtWidgets import QApplication
 import sys
-from pages.LoginPage import LoginPage
-
 from pages.WelcomePage import WelcomePage
 
 
 class App():
     def __init__(self):
-        self.initWindow = LoginPage()
+        self.initWindow = WelcomePage()
         self.initWindow.show()
 
     def tes(self):
