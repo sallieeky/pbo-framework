@@ -1,0 +1,85 @@
+#!/usr/bin/python
+
+import os
+import pymysql
+import sys
+import config
+
+import migrations
+import models
+import pages
+import seeders
+command = sys.argv
+try:
+    db, cursor = config.connection.connect(pymysql.cursors.DictCursor)
+    cursor.execute(f"""
+        SELECT table_name FROM information_schema.tables
+        WHERE table_schema = '{config.connection.database}';
+    """)
+    all_table = cursor.fetchall()
+except:
+    pass
+
+if(command[1] == "migrate"):
+    data = migrations.migrate()
+    for i in data:
+        cursor.execute(i)
+        db.commit()
+    print("Berhasil migrasi seluruh tabel")
+elif(command[1] == "drop"):
+    data = migrations.drop()
+    for table in all_table:
+        cursor.execute(f"DROP TABLE IF EXISTS {table['table_name']}")
+    print("Berhasil drop seluruh tabel")
+
+elif(command[1] == "migrate:fresh"):
+    data = migrations.fresh()
+    for table in all_table:
+        cursor.execute(f"DROP TABLE IF EXISTS {table['table_name']}")
+    print("Berhasil drop seluruh tabel")
+    for i in data["migrate"]:
+        cursor.execute(i)
+        db.commit()
+    print("Berhasil migrasi seluruh tabel")
+    try:
+        if(command[2] == "--seed"):
+            seeders.seed()
+            print("Berhasil memasukkan data kedalam table")
+    except:
+        pass
+
+elif(command[1] == "seed"):
+    seeders.seed()
+    print("Berhasil memasukkan data kedalam table")
+
+elif(command[1] == "make:msm"):
+    try:
+        nama = command[2].capitalize()
+        if (os.path.isfile("models/" + nama + ".py")):
+            print("Model sudah ada")
+        else:
+            models.make_model(nama)
+            print(f"Model {nama} berhasil dibuat")
+        if (os.path.isfile("migrations/" + nama + ".py")):
+            print("Migration sudah ada")
+        else:
+            migrations.make_migration(nama)
+            print(f"Migration {nama} berhasil dibuat")
+        if (os.path.isfile("seeders/" + nama + "Seeder" + ".py")):
+            print("Seeder sudah ada")
+        else:
+            seeders.make_seeder(nama)
+            print(f"Seeder {nama}Seeder berhasil dibuat")
+    except:
+        print("Masukkan nama filenya")
+
+elif(command[1] == "make:page"):
+    try:
+        nama = command[2].capitalize()
+        if (os.path.isfile("pages/" + nama + "Page" + ".py")):
+            print("Page sudah ada")
+        else:
+            pages.make_page(nama)
+            print(f"Page {nama}Page berhasil dibuat")
+    except:
+        print("Masukkan nama filenya")
