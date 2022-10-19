@@ -9,6 +9,7 @@ db, cursor = config.connection.connect(pymysql.cursors.DictCursor)
 class Model:
     def __init__(self, table_name):
         self.table_name = table_name
+        self.query = ""
 
     def all(self):
         cursor.execute(f"SELECT * FROM {self.table_name}")
@@ -36,6 +37,22 @@ class Model:
         cursor.execute(
             f"SELECT * FROM {self.table_name} WHERE {column} {operator} '{value}' LIMIT 1")
         return cursor.fetchone()
+
+    def where(self, column, operator, value):
+        self.query += f"SELECT * FROM {self.table_name} WHERE {column} {operator} '{value}'"
+        return self
+
+    def orWhere(self, column, operator, value):
+        self.query += f" OR {column} {operator} '{value}'"
+        return self
+
+    def andWhere(self, column, operator, value):
+        self.query += f" AND {column} {operator} '{value}'"
+        return self
+
+    def get(self):
+        cursor.execute(self.query)
+        return cursor.fetchall()
 
     def create(self, data):
         keys = ', '.join(data.keys())

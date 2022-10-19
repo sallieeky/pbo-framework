@@ -32,7 +32,7 @@ Konsep yang digunakan pada framework ini yaitu OOP dengan memisahkan antara Page
 
 Untuk database yang disupport yaitu terbatas hanya mysql. Jika ingin menggunakan database, maka perlu untuk mengatur beberapa hal.
 
-- buat database pada pypmyadmin
+- buat database pada phpmyadmin
 - lalu buka `config/connection.py` ubah data di bawah ini sesuai dengan data kalian.
 ```
 host = "localhost"
@@ -286,7 +286,6 @@ model.whereMany('username', '=', 'admin')
 output
 [{'id': 1, 'username': 'admin', 'password': '$2b$12$drvLlOsH1LGUtj6vrwu9te84RLcdxcSsigEDQPcbAhN7tX8FXbZY2', 'created_at': datetime.datetime(2022, 10, 18, 9, 49, 2), 'updated_at': datetime.datetime(2022, 10, 18, 9, 49, 2)}]
 ```
-
 - `whereOnly(column, operator, value)`
 ```
 from models.User import User
@@ -296,6 +295,16 @@ model.whereOnly('username', '=', 'admin')
 
 output
 {'id': 1, 'username': 'admin', 'password': '$2b$12$drvLlOsH1LGUtj6vrwu9te84RLcdxcSsigEDQPcbAhN7tX8FXbZY2', 'created_at': datetime.datetime(2022, 10, 18, 9, 49, 2), 'updated_at': datetime.datetime(2022, 10, 18, 9, 49, 2)}
+```
+- `where(column, operator, value)` dan `orWhere(column, operator, value)` dan `andWhere(column, operator, value)`
+```
+from models.User import User
+
+model = User()
+model.where('username', '=', 'admin').orWhere('username', '=', 'user').andWhere('password', '!=', 'password').get()
+
+output
+[{'id': 1, 'username': 'admin', 'password': '$2b$12$drvLlOsH1LGUtj6vrwu9te84RLcdxcSsigEDQPcbAhN7tX8FXbZY2', 'created_at': datetime.datetime(2022, 10, 18, 9, 49, 2), 'updated_at': datetime.datetime(2022, 10, 18, 9, 49, 2)}]
 ```
 - `create(data)`
 ```
