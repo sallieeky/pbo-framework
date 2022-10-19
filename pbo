@@ -83,3 +83,13 @@ elif(command[1] == "make:page"):
             print(f"Page {nama}Page berhasil dibuat")
     except:
         print("Masukkan nama filenya")
+
+elif(command[1] == "refresh:seeder"):
+    try:
+        nama = command[2].capitalize()
+        seeders.refresh_seeder(nama)
+        print(
+            f"Berhasil mengubah {nama}Seeder.py sesuai dengan column pada table {nama.lower()}")
+    except:
+        print(
+            f"Table {nama.lower()} tidak ditemukan. Lakukan migrate terlebih dahulu")

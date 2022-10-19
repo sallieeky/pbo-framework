@@ -70,6 +70,30 @@ akan secara otomatis membuat file
 - pages/BerandaPage.py
 
 ```
+- `py pbo refresh:seeder [namafile]` digunakan untuk menyinkronkan seeder dengan column pada table yang ada di database secara otomatis
+```
+py pbo refresh:seeder Mahasiswa
+
+akan secara otomatis akan mengubah isi pada file seeders/MahasiswaSeeder.py
+
+apabila schema pada migrations/create_mahasiswa_table.py
+def schema(self):
+    self.query += Schema.id()
+    self.query += Schema.varchar("nama")
+    self.query += Schema.varchar("nim")
+    self.query += Schema.varchar("prodi")
+    self.query += Schema.timestamps()
+    return self.query
+
+maka seed pada seeders/MahasiswaSeeder.py
+def seed(self):
+    self.model.create({
+        'nama': '',
+        'nim': '',
+        'prodi': '',
+    })
+
+```
 ## Helper
 
 Framework ini juga memiliki 2 helper untuk membantu memudahkan dalam pengembangan

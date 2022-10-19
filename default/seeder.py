@@ -14,4 +14,4 @@ class ClassName:
             'prodi': 'sistem informasi'
         })
         """
-        # self.model.create({})
+        self.model.create({})
