@@ -96,7 +96,7 @@ def seed(self):
 ```
 ## Helper
 
-Framework ini juga memiliki 2 helper untuk membantu memudahkan dalam pengembangan
+Framework ini juga memiliki 3 helper untuk membantu memudahkan dalam pengembangan
 
 ### Auth
 Helper ini dapat digunakan untuk membuat fitur login. Auth ini berhubungan dengan model `User` yang ada pada `models/User.py`.
@@ -135,6 +135,39 @@ output:
 True
 False
 ```
+
+### DB
+Helper ini dapat digunakan untuk melakukan query CRUD database dengan menginputkan query sql secara manual.
+
+- `DB.select(query)`
+```
+DB.select("SELECT * FROM user")
+
+output:
+[{'id': 1, 'username': 'admin', 'password': '$2b$12$pYHxgWPLgIqS9xPG8vfTIO2CsAIES4T2dgqSpVtfUW.5tI/yP.zk6', 'created_at': datetime.datetime(2022, 10, 19, 8, 55, 21), 'updated_at': datetime.datetime(2022, 10, 19, 8, 55, 21)}, {'id': 2, 'username': 'admin2', 'password': '$2b$12$zeW.YJtO09T3u1Ts1Ycpw.NPmtvE9IwoC89k7SHgrbR1HPg5xzzea', 'created_at': datetime.datetime(2022, 10, 19, 8, 55, 21), 'updated_at': datetime.datetime(2022, 10, 19, 8, 55, 21)}]
+```
+- `DB.create(query)`
+```
+DB.create("INSERT INTO user(username,password) VALUES ('aa', 'adad');")
+
+output:
+True
+```
+- `DB.update(query)`
+```
+DB.update("UPDATE user SET username='adminupdate' WHERE id=1;")
+
+output:
+True
+```
+- `DB.delete(query)`
+```
+DB.delete("DELETE FROM user WHERE id=1;")
+
+output:
+True
+```
+
 ## Skema Migration
 
 Skema yang dapat digunakan pada migration dapat di lihat pada `migrations/schema.py`
