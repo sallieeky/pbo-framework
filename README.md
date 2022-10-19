@@ -141,6 +141,8 @@ Helper ini dapat digunakan untuk melakukan query CRUD database dengan menginputk
 
 - `DB.select(query)`
 ```
+from helper.db import DB
+
 DB.select("SELECT * FROM user")
 
 output:
@@ -148,6 +150,8 @@ output:
 ```
 - `DB.create(query)`
 ```
+from helper.db import DB
+
 DB.create("INSERT INTO user(username,password) VALUES ('aa', 'adad');")
 
 output:
@@ -155,6 +159,8 @@ True
 ```
 - `DB.update(query)`
 ```
+from helper.db import DB
+
 DB.update("UPDATE user SET username='adminupdate' WHERE id=1;")
 
 output:
@@ -162,6 +168,8 @@ True
 ```
 - `DB.delete(query)`
 ```
+from helper.db import DB
+
 DB.delete("DELETE FROM user WHERE id=1;")
 
 output:
