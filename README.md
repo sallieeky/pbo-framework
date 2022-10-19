@@ -58,7 +58,7 @@ py pbo make:msm Mahasiswa
 
 akan secara otomatis membuat file
 - models/Mahasiswa.py
-- migrations/Mahasiswa.py
+- migrations/create_mahasiswa_table.py
 - seeders/MahasiswaSeeder.py
 
 ```

@@ -1,7 +1,7 @@
 from migrations.schema import Schema
 
 
-class User(Schema):
+class CreateUserTable(Schema):
     def __init__(self):
         Schema.__init__(self)
 

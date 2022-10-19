@@ -60,7 +60,7 @@ elif(command[1] == "make:msm"):
         else:
             models.make_model(nama)
             print(f"Model {nama} berhasil dibuat")
-        if (os.path.isfile("migrations/" + nama + ".py")):
+        if (os.path.isfile("migrations/" + "create_" + nama.lower() + "_table" + ".py")):
             print("Migration sudah ada")
         else:
             migrations.make_migration(nama)

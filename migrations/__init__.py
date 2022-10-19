@@ -1,4 +1,5 @@
 import pkgutil
+import re
 
 
 def migrate():
@@ -9,8 +10,9 @@ def migrate():
         _module = loader.find_module(module_name).load_module(module_name)
         globals()[module_name] = _module
         if module_name != "schema":
-            query.append(getattr(_module, module_name)
-                         ().create(module_name.lower()))
+            className = re.split('_', module_name)
+            query.append(getattr(_module, f"{className[0].capitalize()}{className[1].capitalize()}{className[2].capitalize()}")
+                         ().create(className[1].lower()))
     return query
 
 
@@ -22,8 +24,9 @@ def drop():
         _module = loader.find_module(module_name).load_module(module_name)
         globals()[module_name] = _module
         if module_name != "schema":
-            query.append(getattr(_module, module_name)
-                         ().drop(module_name.lower()))
+            className = re.split('_', module_name)
+            query.append(getattr(_module, f"{className[0].capitalize()}{className[1].capitalize()}{className[2].capitalize()}")
+                         ().drop(className[1].lower()))
     return query
 
 
@@ -36,10 +39,13 @@ def fresh():
 
 
 def make_migration(file_name):
+    if "migration" not in file_name.capitalize():
+        file_name = "create_" + file_name.lower() + "_table"
+    className = re.split('_', file_name)
     with open('default/migration.py', 'r') as reader:
-        with open(f'migrations/{file_name.capitalize()}.py', 'w') as writer:
+        with open(f'migrations/{file_name}.py', 'w') as writer:
             for line in reader:
                 if 'class ClassName(Schema):' in line:
                     line = line.replace('class ClassName(Schema):',
-                                        f'class {file_name.capitalize()}(Schema):')
+                                        f'class {className[0].capitalize()}{className[1].capitalize()}{className[2].capitalize()}(Schema):')
                 writer.write(line)
