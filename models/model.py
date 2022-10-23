@@ -11,6 +11,11 @@ class Model:
         self.table_name = table_name
         self.query = ""
 
+    def select(self, *columns):
+        col = ",".join(columns)
+        self.query += f"SELECT {'*' if len(columns)==0 else col} FROM {self.table_name}"
+        return self
+
     def all(self):
         cursor.execute(f"SELECT * FROM {self.table_name}")
         return cursor.fetchall()
@@ -50,10 +55,6 @@ class Model:
         self.query += f" AND {column} {operator} '{value}'"
         return self
 
-    def get(self):
-        cursor.execute(self.query)
-        return cursor.fetchall()
-
     def create(self, data):
         keys = ', '.join(data.keys())
         values = ', '.join(['%s'] * len(data))
@@ -79,3 +80,7 @@ class Model:
         cursor.execute(f"TRUNCATE TABLE {self.table_name}")
         db.commit()
         return True
+
+    def get(self):
+        cursor.execute(self.query)
+        return cursor.fetchall()

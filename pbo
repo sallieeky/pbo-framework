@@ -64,7 +64,7 @@ elif(command[1] == "make:msm"):
             print("Migration sudah ada")
         else:
             migrations.make_migration(nama)
-            print(f"Migration {nama} berhasil dibuat")
+            print(f"Migration create_{nama.lower()}_table berhasil dibuat")
         if (os.path.isfile("seeders/" + nama + "Seeder" + ".py")):
             print("Seeder sudah ada")
         else:
