@@ -6,8 +6,10 @@ from pages.page import Page
 
 
 class HomePage(Page):
-    def __init__(self):
+    def __init__(self, data={}):
         super().__init__()
+        self.data = data
+
         self.initUi()
 
     def initUi(self):

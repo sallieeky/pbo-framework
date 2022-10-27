@@ -8,9 +8,6 @@ class App():
         self.initWindow = WelcomePage()
         self.initWindow.show()
 
-    def tes(self):
-        print("tes")
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

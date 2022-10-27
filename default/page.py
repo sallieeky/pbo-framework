@@ -6,8 +6,9 @@ from pages.page import Page
 
 
 class ClassName(Page):
-    def __init__(self):
+    def __init__(self, data={}):
         super().__init__()
+        self.data = data
 
         self.initUI()
 

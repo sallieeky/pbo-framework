@@ -7,8 +7,9 @@ from pages.page import Page
 
 
 class WelcomePage(Page):
-    def __init__(self):
+    def __init__(self, data={}):
         super().__init__()
+        self.data = data
 
         self.setStyleSheet("QWidget {background-color: #ffffff;}")
         self.initUI()
@@ -42,7 +43,7 @@ class WelcomePage(Page):
 
         self.notes = QLabel(self)
         self.notes.setText(
-            'Notes: You can delete this page and create your own page or edit hello.py file.')
+            'Notes: You can delete this page and create your own page or edit pages/WelcomePage.py file.')
         self.notes.move(30, self.height - 50)
         self.notes.setStyleSheet(
             "QLabel {font-size: 12px; color: #04045C; font-family: Arial; }")
