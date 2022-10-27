@@ -4,6 +4,7 @@ import os
 import pymysql
 import sys
 import config
+import controllers
 
 import migrations
 import models
@@ -81,6 +82,18 @@ elif(command[1] == "make:page"):
         else:
             pages.make_page(nama)
             print(f"Page {nama}Page berhasil dibuat")
+    except:
+        print("Masukkan nama filenya")
+
+elif(command[1] == "make:controller"):
+    try:
+        nama = command[2]
+        if (os.path.isfile("controllers/" + nama.capitalize() + "Controller" if 'Controller' not in nama else '' + ".py")):
+            print("Controller sudah ada")
+        else:
+            controllers.make_controller(nama)
+            print(
+                f"Controller {nama.capitalize()}{'Controller' if 'Controller' not in nama else ''} berhasil dibuat")
     except:
         print("Masukkan nama filenya")
 

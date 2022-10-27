@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 class Page(QWidget):
     def __init__(self):
         super().__init__()
+
         self.title = 'Welcome Application'
         self.width = 640
         self.height = 480

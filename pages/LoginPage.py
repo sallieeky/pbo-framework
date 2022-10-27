@@ -1,9 +1,9 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from helper.auth import Auth
 from pages.HomePage import HomePage
 
+from controllers import controller
 from pages.page import Page
 
 
@@ -44,8 +44,8 @@ class LoginPage(Page):
         self.status.setMinimumWidth(600)
 
     def login(self):
-        auth = Auth()
-        result = auth.login(self.usernameLe.text(), self.passwordLe.text())
+        result = controller("AuthController", "login", {
+            'username': self.usernameLe.text(), 'password': self.passwordLe.text()})
         self.status.setText(
             "Gagal login username atau password salah" if result == False else "Username dan password benar, anda berhasil login")
         self.switchPage(HomePage()) if result == True else None
